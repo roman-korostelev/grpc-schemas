@@ -1,0 +1,78 @@
+syntax = "proto3";
+
+option go_package = "github.com/roman-korostelev/taxi-order-service";
+package grpc;
+
+service RouteGuide {
+  rpc RateDriver(DriverRatingReq) returns (Response){}
+  rpc RateUser(UserRatingReq) returns (Response){}
+  rpc CreateOrder(OrderReq) returns (OrderResponse) {}
+  rpc FindDriverForOrder(FindDriverReq) returns (FindDriverResponse) {}
+  rpc FindOrders(FindOrdersReq) returns (Orders) {}
+}
+
+message DriverRatingReq {
+  float mark = 1;
+  string uuid = 2;
+}
+
+message Response {
+
+}
+
+message UserRatingReq {
+  float mark = 1;
+  string id = 2;
+}
+
+message OrderReq {
+  string userId = 1;
+  string from = 2;
+  string to = 3;
+  TaxiType type = 4;
+}
+
+message OrderResponse {
+    string orderId = 1;
+}
+
+message FindDriverReq {
+  int32 taxiType = 1;
+}
+
+message FindDriverResponse {
+  string uuid = 1;
+}
+
+enum TaxiType {
+  UndefinedTaxi = 0;
+  Economy = 1;
+  Business = 2;
+}
+
+enum StatusType {
+  UndefinedStatus = 0;
+  inProgress = 1;
+  Finished = 2;
+}
+
+message FindOrdersReq {
+  optional string DriverId = 1;
+  optional string UserId = 2;
+  optional string From = 3;
+  optional string To = 4;
+}
+
+message Order {
+  string DriverId = 1;
+  string UserId = 2;
+  string From = 3;
+  string To = 4;
+  TaxiType Taxi = 5;
+  int64 UnixTime = 6;
+  StatusType Stat = 7;
+}
+
+message Orders {
+  repeated Order order = 1;
+}
