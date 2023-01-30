@@ -2,23 +2,22 @@ package server
 
 import (
 	"context"
-	taxi_order_service "github.com/roman-korostelev/grpc-schemas/grpc"
-	grpc "github.com/roman-korostelev/taxi-order-service/grpc"
-	"github.com/roman-korostelev/taxi-order-service/internal/repository"
+	grpc "github.com/roman-korostelev/grpc-schemas/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
 
 type Repository interface {
-	CreateOrder(context.Context, string, string, string, string, taxi_order_service.TaxiType) (string, error)
+	CreateOrder(context.Context, string, string, string, string, grpc.TaxiType) (string, error)
+	FindOrderByFields(context.Context, string, string, string, string) ([]*grpc.Order, error)
 }
 
 type ImplementedRouteGuideServer struct {
 	grpc.UnimplementedRouteGuideServer
-	repo *repository.OrderRepository
+	repo Repository
 }
 
-func NewRouteGuideServer(r *repository.OrderRepository) *ImplementedRouteGuideServer {
+func NewRouteGuideServer(r Repository) *ImplementedRouteGuideServer {
 	return &ImplementedRouteGuideServer{
 		UnimplementedRouteGuideServer: grpc.UnimplementedRouteGuideServer{},
 		repo:                          r,
