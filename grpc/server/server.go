@@ -38,7 +38,7 @@ func (ImplementedRouteGuideServer) FindDriverForOrder(context.Context, *grpc.Fin
 }
 
 func (s ImplementedRouteGuideServer) FindOrders(ctx context.Context, req *grpc.FindOrdersReq) (*grpc.Orders, error) {
-	orders, err := s.repo.FindOrderByFields(ctx, *(req.UserId), *(req.DriverId), *(req.From), *(req.To))
+	orders, err := s.repo.FindOrderByFields(ctx, req.GetUserId(), req.GetDriverId(), req.GetFrom(), req.GetTo())
 	if err != nil {
 		return nil, err
 	}
