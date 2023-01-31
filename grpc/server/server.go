@@ -37,7 +37,7 @@ func (ImplementedRouteGuideServer) FindDriverForOrder(context.Context, *grpc.Fin
 	return nil, status.Errorf(codes.Unimplemented, "method FindDriverForOrder not implemented")
 }
 
-func (s ImplementedRouteGuideServer) FindOrders(ctx context.Context, req *grpc.FindOrdersReq) (*grpc.Orders, error) {
+func (s ImplementedRouteGuideServer) FindDriverOrders(ctx context.Context, req *grpc.FindOrdersReq) (*grpc.Orders, error) {
 	orders, err := s.repo.FindOrderByFields(ctx, req.GetUserId(), req.GetDriverId(), req.GetFrom(), req.GetTo())
 	if err != nil {
 		return nil, err
