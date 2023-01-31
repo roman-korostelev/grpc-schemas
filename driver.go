@@ -14,7 +14,7 @@ type Driver interface {
 	ChangeStatus(context.Context, *logrus.Logger, string) error
 }
 
-func FindOrders(logger *logrus.Logger, client taxi_order_service.RouteGuideClient, in *taxi_order_service.FindOrdersReq) (*taxi_order_service.Orders, error) {
+func FindDriverOrders(logger *logrus.Logger, client taxi_order_service.RouteGuideClient, in *taxi_order_service.FindOrdersReq) (*taxi_order_service.Orders, error) {
 	logger.Infof("Getting orders of driver with id : %v", in.DriverId)
 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
