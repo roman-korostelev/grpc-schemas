@@ -1,13 +1,12 @@
 syntax = "proto3";
 
-option go_package = "github.com/roman-korostelev/taxi-order-service";
+option go_package = "github.com/roman-korostelev/grpc-schemas";
 package grpc;
 
 service RouteGuide {
   rpc RateDriver(DriverRatingReq) returns (Response){}
   rpc RateUser(UserRatingReq) returns (Response){}
   rpc CreateOrder(OrderReq) returns (OrderResponse) {}
-  rpc FindDriverForOrder(FindDriverReq) returns (FindDriverResponse) {}
   rpc FindOrders(FindOrdersReq) returns (Orders) {}
 }
 
@@ -34,14 +33,6 @@ message OrderReq {
 
 message OrderResponse {
     string orderId = 1;
-}
-
-message FindDriverReq {
-  int32 taxiType = 1;
-}
-
-message FindDriverResponse {
-  string uuid = 1;
 }
 
 enum TaxiType {

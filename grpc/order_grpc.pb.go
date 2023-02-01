@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             v3.21.12
-// source: grpc/order.proto
+// source: order.proto
 
 package taxi_order_service
 
@@ -25,7 +25,6 @@ type RouteGuideClient interface {
 	RateDriver(ctx context.Context, in *DriverRatingReq, opts ...grpc.CallOption) (*Response, error)
 	RateUser(ctx context.Context, in *UserRatingReq, opts ...grpc.CallOption) (*Response, error)
 	CreateOrder(ctx context.Context, in *OrderReq, opts ...grpc.CallOption) (*OrderResponse, error)
-	FindDriverForOrder(ctx context.Context, in *FindDriverReq, opts ...grpc.CallOption) (*FindDriverResponse, error)
 	FindOrders(ctx context.Context, in *FindOrdersReq, opts ...grpc.CallOption) (*Orders, error)
 }
 
@@ -64,15 +63,6 @@ func (c *routeGuideClient) CreateOrder(ctx context.Context, in *OrderReq, opts .
 	return out, nil
 }
 
-func (c *routeGuideClient) FindDriverForOrder(ctx context.Context, in *FindDriverReq, opts ...grpc.CallOption) (*FindDriverResponse, error) {
-	out := new(FindDriverResponse)
-	err := c.cc.Invoke(ctx, "/grpc.RouteGuide/FindDriverForOrder", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *routeGuideClient) FindOrders(ctx context.Context, in *FindOrdersReq, opts ...grpc.CallOption) (*Orders, error) {
 	out := new(Orders)
 	err := c.cc.Invoke(ctx, "/grpc.RouteGuide/FindOrders", in, out, opts...)
@@ -89,7 +79,6 @@ type RouteGuideServer interface {
 	RateDriver(context.Context, *DriverRatingReq) (*Response, error)
 	RateUser(context.Context, *UserRatingReq) (*Response, error)
 	CreateOrder(context.Context, *OrderReq) (*OrderResponse, error)
-	FindDriverForOrder(context.Context, *FindDriverReq) (*FindDriverResponse, error)
 	FindOrders(context.Context, *FindOrdersReq) (*Orders, error)
 	mustEmbedUnimplementedRouteGuideServer()
 }
@@ -106,9 +95,6 @@ func (UnimplementedRouteGuideServer) RateUser(context.Context, *UserRatingReq) (
 }
 func (UnimplementedRouteGuideServer) CreateOrder(context.Context, *OrderReq) (*OrderResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateOrder not implemented")
-}
-func (UnimplementedRouteGuideServer) FindDriverForOrder(context.Context, *FindDriverReq) (*FindDriverResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method FindDriverForOrder not implemented")
 }
 func (UnimplementedRouteGuideServer) FindOrders(context.Context, *FindOrdersReq) (*Orders, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method FindOrders not implemented")
@@ -180,24 +166,6 @@ func _RouteGuide_CreateOrder_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RouteGuide_FindDriverForOrder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(FindDriverReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(RouteGuideServer).FindDriverForOrder(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/grpc.RouteGuide/FindDriverForOrder",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RouteGuideServer).FindDriverForOrder(ctx, req.(*FindDriverReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _RouteGuide_FindOrders_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(FindOrdersReq)
 	if err := dec(in); err != nil {
@@ -236,14 +204,10 @@ var RouteGuide_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _RouteGuide_CreateOrder_Handler,
 		},
 		{
-			MethodName: "FindDriverForOrder",
-			Handler:    _RouteGuide_FindDriverForOrder_Handler,
-		},
-		{
 			MethodName: "FindOrders",
 			Handler:    _RouteGuide_FindOrders_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "grpc/order.proto",
+	Metadata: "order.proto",
 }
