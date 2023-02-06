@@ -4,7 +4,7 @@
 // - protoc             v3.21.12
 // source: driver.proto
 
-package taxi_order_service
+package grpc_schemas
 
 import (
 	context "context"

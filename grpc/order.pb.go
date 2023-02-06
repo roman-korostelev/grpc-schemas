@@ -4,7 +4,7 @@
 // 	protoc        v3.21.12
 // source: order.proto
 
-package taxi_order_service
+package grpc_schemas
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -273,8 +273,8 @@ type OrderReq struct {
 
 	UserId string   `protobuf:"bytes,1,opt,name=userId,proto3" json:"userId,omitempty"`
 	From   string   `protobuf:"bytes,2,opt,name=from,proto3" json:"from,omitempty"`
-	To   string   `protobuf:"bytes,3,opt,name=to,proto3" json:"to,omitempty"`
-	Type TaxiType `protobuf:"varint,4,opt,name=type,proto3,enum=grpc.TaxiType" json:"type,omitempty"`
+	To     string   `protobuf:"bytes,3,opt,name=to,proto3" json:"to,omitempty"`
+	Type   TaxiType `protobuf:"varint,4,opt,name=type,proto3,enum=grpc.TaxiType" json:"type,omitempty"`
 }
 
 func (x *OrderReq) Reset() {

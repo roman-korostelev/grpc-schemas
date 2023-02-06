@@ -1,15 +1,19 @@
 syntax = "proto3";
 
 option go_package = "github.com/roman-korostelev/grpc-schemas";
+import "order.proto";
 package grpc;
 
 service Driver {
   rpc FindDriver(FindDriverReq) returns (FindDriverResponse){}
 }
 
+
 message FindDriverReq {
   string UserId = 1;
+  TaxiType Type = 2;
 }
+
 
 message FindDriverResponse {
   string DriverId = 1;
