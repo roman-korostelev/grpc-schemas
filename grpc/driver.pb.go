@@ -20,17 +20,14 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type FindDriverReq struct {
+type Empty struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
-
-	UserId string   `protobuf:"bytes,1,opt,name=UserId,proto3" json:"UserId,omitempty"`
-	Type   TaxiType `protobuf:"varint,2,opt,name=Type,proto3,enum=grpc.TaxiType" json:"Type,omitempty"`
 }
 
-func (x *FindDriverReq) Reset() {
-	*x = FindDriverReq{}
+func (x *Empty) Reset() {
+	*x = Empty{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_driver_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -38,13 +35,13 @@ func (x *FindDriverReq) Reset() {
 	}
 }
 
-func (x *FindDriverReq) String() string {
+func (x *Empty) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*FindDriverReq) ProtoMessage() {}
+func (*Empty) ProtoMessage() {}
 
-func (x *FindDriverReq) ProtoReflect() protoreflect.Message {
+func (x *Empty) ProtoReflect() protoreflect.Message {
 	mi := &file_driver_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -56,35 +53,22 @@ func (x *FindDriverReq) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use FindDriverReq.ProtoReflect.Descriptor instead.
-func (*FindDriverReq) Descriptor() ([]byte, []int) {
+// Deprecated: Use Empty.ProtoReflect.Descriptor instead.
+func (*Empty) Descriptor() ([]byte, []int) {
 	return file_driver_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *FindDriverReq) GetUserId() string {
-	if x != nil {
-		return x.UserId
-	}
-	return ""
-}
-
-func (x *FindDriverReq) GetType() TaxiType {
-	if x != nil {
-		return x.Type
-	}
-	return TaxiType_UndefinedTaxi
-}
-
-type FindDriverResponse struct {
+type Driver struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	DriverId string `protobuf:"bytes,1,opt,name=DriverId,proto3" json:"DriverId,omitempty"`
+	DriverId string   `protobuf:"bytes,1,opt,name=DriverId,proto3" json:"DriverId,omitempty"`
+	Car      TaxiType `protobuf:"varint,2,opt,name=Car,proto3,enum=grpc.TaxiType" json:"Car,omitempty"`
 }
 
-func (x *FindDriverResponse) Reset() {
-	*x = FindDriverResponse{}
+func (x *Driver) Reset() {
+	*x = Driver{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_driver_proto_msgTypes[1]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -92,13 +76,13 @@ func (x *FindDriverResponse) Reset() {
 	}
 }
 
-func (x *FindDriverResponse) String() string {
+func (x *Driver) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*FindDriverResponse) ProtoMessage() {}
+func (*Driver) ProtoMessage() {}
 
-func (x *FindDriverResponse) ProtoReflect() protoreflect.Message {
+func (x *Driver) ProtoReflect() protoreflect.Message {
 	mi := &file_driver_proto_msgTypes[1]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -110,14 +94,115 @@ func (x *FindDriverResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use FindDriverResponse.ProtoReflect.Descriptor instead.
-func (*FindDriverResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use Driver.ProtoReflect.Descriptor instead.
+func (*Driver) Descriptor() ([]byte, []int) {
 	return file_driver_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *FindDriverResponse) GetDriverId() string {
+func (x *Driver) GetDriverId() string {
 	if x != nil {
 		return x.DriverId
+	}
+	return ""
+}
+
+func (x *Driver) GetCar() TaxiType {
+	if x != nil {
+		return x.Car
+	}
+	return TaxiType_UndefinedTaxi
+}
+
+type Drivers struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Drivers []*Driver `protobuf:"bytes,1,rep,name=drivers,proto3" json:"drivers,omitempty"`
+}
+
+func (x *Drivers) Reset() {
+	*x = Drivers{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_driver_proto_msgTypes[2]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Drivers) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Drivers) ProtoMessage() {}
+
+func (x *Drivers) ProtoReflect() protoreflect.Message {
+	mi := &file_driver_proto_msgTypes[2]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Drivers.ProtoReflect.Descriptor instead.
+func (*Drivers) Descriptor() ([]byte, []int) {
+	return file_driver_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *Drivers) GetDrivers() []*Driver {
+	if x != nil {
+		return x.Drivers
+	}
+	return nil
+}
+
+type RatingReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	UserId string `protobuf:"bytes,1,opt,name=UserId,proto3" json:"UserId,omitempty"`
+}
+
+func (x *RatingReq) Reset() {
+	*x = RatingReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_driver_proto_msgTypes[3]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RatingReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RatingReq) ProtoMessage() {}
+
+func (x *RatingReq) ProtoReflect() protoreflect.Message {
+	mi := &file_driver_proto_msgTypes[3]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RatingReq.ProtoReflect.Descriptor instead.
+func (*RatingReq) Descriptor() ([]byte, []int) {
+	return file_driver_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *RatingReq) GetUserId() string {
+	if x != nil {
+		return x.UserId
 	}
 	return ""
 }
@@ -127,22 +212,27 @@ var File_driver_proto protoreflect.FileDescriptor
 var file_driver_proto_rawDesc = []byte{
 	0x0a, 0x0c, 0x64, 0x72, 0x69, 0x76, 0x65, 0x72, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x04,
 	0x67, 0x72, 0x70, 0x63, 0x1a, 0x0b, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x2e, 0x70, 0x72, 0x6f, 0x74,
-	0x6f, 0x22, 0x4b, 0x0a, 0x0d, 0x46, 0x69, 0x6e, 0x64, 0x44, 0x72, 0x69, 0x76, 0x65, 0x72, 0x52,
-	0x65, 0x71, 0x12, 0x16, 0x0a, 0x06, 0x55, 0x73, 0x65, 0x72, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01,
-	0x28, 0x09, 0x52, 0x06, 0x55, 0x73, 0x65, 0x72, 0x49, 0x64, 0x12, 0x22, 0x0a, 0x04, 0x54, 0x79,
-	0x70, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x0e, 0x2e, 0x67, 0x72, 0x70, 0x63, 0x2e,
-	0x54, 0x61, 0x78, 0x69, 0x54, 0x79, 0x70, 0x65, 0x52, 0x04, 0x54, 0x79, 0x70, 0x65, 0x22, 0x30,
-	0x0a, 0x12, 0x46, 0x69, 0x6e, 0x64, 0x44, 0x72, 0x69, 0x76, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70,
-	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x1a, 0x0a, 0x08, 0x44, 0x72, 0x69, 0x76, 0x65, 0x72, 0x49, 0x64,
+	0x6f, 0x22, 0x07, 0x0a, 0x05, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x22, 0x46, 0x0a, 0x06, 0x44, 0x72,
+	0x69, 0x76, 0x65, 0x72, 0x12, 0x1a, 0x0a, 0x08, 0x44, 0x72, 0x69, 0x76, 0x65, 0x72, 0x49, 0x64,
 	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x44, 0x72, 0x69, 0x76, 0x65, 0x72, 0x49, 0x64,
-	0x32, 0x47, 0x0a, 0x06, 0x44, 0x72, 0x69, 0x76, 0x65, 0x72, 0x12, 0x3d, 0x0a, 0x0a, 0x46, 0x69,
-	0x6e, 0x64, 0x44, 0x72, 0x69, 0x76, 0x65, 0x72, 0x12, 0x13, 0x2e, 0x67, 0x72, 0x70, 0x63, 0x2e,
-	0x46, 0x69, 0x6e, 0x64, 0x44, 0x72, 0x69, 0x76, 0x65, 0x72, 0x52, 0x65, 0x71, 0x1a, 0x18, 0x2e,
-	0x67, 0x72, 0x70, 0x63, 0x2e, 0x46, 0x69, 0x6e, 0x64, 0x44, 0x72, 0x69, 0x76, 0x65, 0x72, 0x52,
-	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x42, 0x2a, 0x5a, 0x28, 0x67, 0x69, 0x74,
-	0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x72, 0x6f, 0x6d, 0x61, 0x6e, 0x2d, 0x6b, 0x6f,
-	0x72, 0x6f, 0x73, 0x74, 0x65, 0x6c, 0x65, 0x76, 0x2f, 0x67, 0x72, 0x70, 0x63, 0x2d, 0x73, 0x63,
-	0x68, 0x65, 0x6d, 0x61, 0x73, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x12, 0x20, 0x0a, 0x03, 0x43, 0x61, 0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x0e, 0x2e,
+	0x67, 0x72, 0x70, 0x63, 0x2e, 0x54, 0x61, 0x78, 0x69, 0x54, 0x79, 0x70, 0x65, 0x52, 0x03, 0x43,
+	0x61, 0x72, 0x22, 0x31, 0x0a, 0x07, 0x44, 0x72, 0x69, 0x76, 0x65, 0x72, 0x73, 0x12, 0x26, 0x0a,
+	0x07, 0x64, 0x72, 0x69, 0x76, 0x65, 0x72, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x0c,
+	0x2e, 0x67, 0x72, 0x70, 0x63, 0x2e, 0x44, 0x72, 0x69, 0x76, 0x65, 0x72, 0x52, 0x07, 0x64, 0x72,
+	0x69, 0x76, 0x65, 0x72, 0x73, 0x22, 0x23, 0x0a, 0x09, 0x52, 0x61, 0x74, 0x69, 0x6e, 0x67, 0x52,
+	0x65, 0x71, 0x12, 0x16, 0x0a, 0x06, 0x55, 0x73, 0x65, 0x72, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x06, 0x55, 0x73, 0x65, 0x72, 0x49, 0x64, 0x32, 0x70, 0x0a, 0x0d, 0x44, 0x72,
+	0x69, 0x76, 0x65, 0x72, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x2e, 0x0a, 0x0e, 0x47,
+	0x65, 0x74, 0x46, 0x72, 0x65, 0x65, 0x44, 0x72, 0x69, 0x76, 0x65, 0x72, 0x73, 0x12, 0x0b, 0x2e,
+	0x67, 0x72, 0x70, 0x63, 0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x1a, 0x0d, 0x2e, 0x67, 0x72, 0x70,
+	0x63, 0x2e, 0x44, 0x72, 0x69, 0x76, 0x65, 0x72, 0x73, 0x22, 0x00, 0x12, 0x2f, 0x0a, 0x0d, 0x4d,
+	0x61, 0x6b, 0x65, 0x52, 0x61, 0x74, 0x69, 0x6e, 0x67, 0x52, 0x65, 0x71, 0x12, 0x0f, 0x2e, 0x67,
+	0x72, 0x70, 0x63, 0x2e, 0x52, 0x61, 0x74, 0x69, 0x6e, 0x67, 0x52, 0x65, 0x71, 0x1a, 0x0b, 0x2e,
+	0x67, 0x72, 0x70, 0x63, 0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x22, 0x00, 0x42, 0x2a, 0x5a, 0x28,
+	0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x72, 0x6f, 0x6d, 0x61, 0x6e,
+	0x2d, 0x6b, 0x6f, 0x72, 0x6f, 0x73, 0x74, 0x65, 0x6c, 0x65, 0x76, 0x2f, 0x67, 0x72, 0x70, 0x63,
+	0x2d, 0x73, 0x63, 0x68, 0x65, 0x6d, 0x61, 0x73, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -157,21 +247,26 @@ func file_driver_proto_rawDescGZIP() []byte {
 	return file_driver_proto_rawDescData
 }
 
-var file_driver_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_driver_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_driver_proto_goTypes = []interface{}{
-	(*FindDriverReq)(nil),      // 0: grpc.FindDriverReq
-	(*FindDriverResponse)(nil), // 1: grpc.FindDriverResponse
-	(TaxiType)(0),              // 2: grpc.TaxiType
+	(*Empty)(nil),     // 0: grpc.Empty
+	(*Driver)(nil),    // 1: grpc.Driver
+	(*Drivers)(nil),   // 2: grpc.Drivers
+	(*RatingReq)(nil), // 3: grpc.RatingReq
+	(TaxiType)(0),     // 4: grpc.TaxiType
 }
 var file_driver_proto_depIdxs = []int32{
-	2, // 0: grpc.FindDriverReq.Type:type_name -> grpc.TaxiType
-	0, // 1: grpc.Driver.FindDriver:input_type -> grpc.FindDriverReq
-	1, // 2: grpc.Driver.FindDriver:output_type -> grpc.FindDriverResponse
-	2, // [2:3] is the sub-list for method output_type
-	1, // [1:2] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	4, // 0: grpc.Driver.Car:type_name -> grpc.TaxiType
+	1, // 1: grpc.Drivers.drivers:type_name -> grpc.Driver
+	0, // 2: grpc.DriverService.GetFreeDrivers:input_type -> grpc.Empty
+	3, // 3: grpc.DriverService.MakeRatingReq:input_type -> grpc.RatingReq
+	2, // 4: grpc.DriverService.GetFreeDrivers:output_type -> grpc.Drivers
+	0, // 5: grpc.DriverService.MakeRatingReq:output_type -> grpc.Empty
+	4, // [4:6] is the sub-list for method output_type
+	2, // [2:4] is the sub-list for method input_type
+	2, // [2:2] is the sub-list for extension type_name
+	2, // [2:2] is the sub-list for extension extendee
+	0, // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_driver_proto_init() }
@@ -182,7 +277,7 @@ func file_driver_proto_init() {
 	file_order_proto_init()
 	if !protoimpl.UnsafeEnabled {
 		file_driver_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*FindDriverReq); i {
+			switch v := v.(*Empty); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -194,7 +289,31 @@ func file_driver_proto_init() {
 			}
 		}
 		file_driver_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*FindDriverResponse); i {
+			switch v := v.(*Driver); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_driver_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Drivers); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_driver_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RatingReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -212,7 +331,7 @@ func file_driver_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_driver_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

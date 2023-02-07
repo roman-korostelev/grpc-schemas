@@ -4,17 +4,24 @@ option go_package = "github.com/roman-korostelev/grpc-schemas";
 import "order.proto";
 package grpc;
 
-service Driver {
-  rpc FindDriver(FindDriverReq) returns (FindDriverResponse){}
+service DriverService {
+  rpc GetFreeDrivers(Empty) returns (Drivers){}
+  rpc MakeRatingReq(RatingReq) returns (Empty){}
 }
 
 
-message FindDriverReq {
-  string UserId = 1;
-  TaxiType Type = 2;
+message Empty {
 }
 
-
-message FindDriverResponse {
+message Driver {
   string DriverId = 1;
+  TaxiType Car = 2;
+}
+
+message Drivers {
+  repeated Driver drivers = 1;
+}
+
+message RatingReq {
+  string UserId = 1;
 }

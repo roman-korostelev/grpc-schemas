@@ -18,194 +18,194 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// RouteGuideClient is the client API for RouteGuide service.
+// OrderServiceClient is the client API for OrderService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type RouteGuideClient interface {
+type OrderServiceClient interface {
 	RateDriver(ctx context.Context, in *DriverRatingReq, opts ...grpc.CallOption) (*Response, error)
 	RateUser(ctx context.Context, in *UserRatingReq, opts ...grpc.CallOption) (*Response, error)
 	CreateOrder(ctx context.Context, in *OrderReq, opts ...grpc.CallOption) (*OrderResponse, error)
 	FindOrders(ctx context.Context, in *FindOrdersReq, opts ...grpc.CallOption) (*Orders, error)
 }
 
-type routeGuideClient struct {
+type orderServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewRouteGuideClient(cc grpc.ClientConnInterface) RouteGuideClient {
-	return &routeGuideClient{cc}
+func NewOrderServiceClient(cc grpc.ClientConnInterface) OrderServiceClient {
+	return &orderServiceClient{cc}
 }
 
-func (c *routeGuideClient) RateDriver(ctx context.Context, in *DriverRatingReq, opts ...grpc.CallOption) (*Response, error) {
+func (c *orderServiceClient) RateDriver(ctx context.Context, in *DriverRatingReq, opts ...grpc.CallOption) (*Response, error) {
 	out := new(Response)
-	err := c.cc.Invoke(ctx, "/grpc.RouteGuide/RateDriver", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/grpc.OrderService/RateDriver", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *routeGuideClient) RateUser(ctx context.Context, in *UserRatingReq, opts ...grpc.CallOption) (*Response, error) {
+func (c *orderServiceClient) RateUser(ctx context.Context, in *UserRatingReq, opts ...grpc.CallOption) (*Response, error) {
 	out := new(Response)
-	err := c.cc.Invoke(ctx, "/grpc.RouteGuide/RateUser", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/grpc.OrderService/RateUser", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *routeGuideClient) CreateOrder(ctx context.Context, in *OrderReq, opts ...grpc.CallOption) (*OrderResponse, error) {
+func (c *orderServiceClient) CreateOrder(ctx context.Context, in *OrderReq, opts ...grpc.CallOption) (*OrderResponse, error) {
 	out := new(OrderResponse)
-	err := c.cc.Invoke(ctx, "/grpc.RouteGuide/CreateOrder", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/grpc.OrderService/CreateOrder", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *routeGuideClient) FindOrders(ctx context.Context, in *FindOrdersReq, opts ...grpc.CallOption) (*Orders, error) {
+func (c *orderServiceClient) FindOrders(ctx context.Context, in *FindOrdersReq, opts ...grpc.CallOption) (*Orders, error) {
 	out := new(Orders)
-	err := c.cc.Invoke(ctx, "/grpc.RouteGuide/FindOrders", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/grpc.OrderService/FindOrders", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// RouteGuideServer is the server API for RouteGuide service.
-// All implementations must embed UnimplementedRouteGuideServer
+// OrderServiceServer is the server API for OrderService service.
+// All implementations must embed UnimplementedOrderServiceServer
 // for forward compatibility
-type RouteGuideServer interface {
+type OrderServiceServer interface {
 	RateDriver(context.Context, *DriverRatingReq) (*Response, error)
 	RateUser(context.Context, *UserRatingReq) (*Response, error)
 	CreateOrder(context.Context, *OrderReq) (*OrderResponse, error)
 	FindOrders(context.Context, *FindOrdersReq) (*Orders, error)
-	mustEmbedUnimplementedRouteGuideServer()
+	mustEmbedUnimplementedOrderServiceServer()
 }
 
-// UnimplementedRouteGuideServer must be embedded to have forward compatible implementations.
-type UnimplementedRouteGuideServer struct {
+// UnimplementedOrderServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedOrderServiceServer struct {
 }
 
-func (UnimplementedRouteGuideServer) RateDriver(context.Context, *DriverRatingReq) (*Response, error) {
+func (UnimplementedOrderServiceServer) RateDriver(context.Context, *DriverRatingReq) (*Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RateDriver not implemented")
 }
-func (UnimplementedRouteGuideServer) RateUser(context.Context, *UserRatingReq) (*Response, error) {
+func (UnimplementedOrderServiceServer) RateUser(context.Context, *UserRatingReq) (*Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RateUser not implemented")
 }
-func (UnimplementedRouteGuideServer) CreateOrder(context.Context, *OrderReq) (*OrderResponse, error) {
+func (UnimplementedOrderServiceServer) CreateOrder(context.Context, *OrderReq) (*OrderResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateOrder not implemented")
 }
-func (UnimplementedRouteGuideServer) FindOrders(context.Context, *FindOrdersReq) (*Orders, error) {
+func (UnimplementedOrderServiceServer) FindOrders(context.Context, *FindOrdersReq) (*Orders, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method FindOrders not implemented")
 }
-func (UnimplementedRouteGuideServer) mustEmbedUnimplementedRouteGuideServer() {}
+func (UnimplementedOrderServiceServer) mustEmbedUnimplementedOrderServiceServer() {}
 
-// UnsafeRouteGuideServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to RouteGuideServer will
+// UnsafeOrderServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to OrderServiceServer will
 // result in compilation errors.
-type UnsafeRouteGuideServer interface {
-	mustEmbedUnimplementedRouteGuideServer()
+type UnsafeOrderServiceServer interface {
+	mustEmbedUnimplementedOrderServiceServer()
 }
 
-func RegisterRouteGuideServer(s grpc.ServiceRegistrar, srv RouteGuideServer) {
-	s.RegisterService(&RouteGuide_ServiceDesc, srv)
+func RegisterOrderServiceServer(s grpc.ServiceRegistrar, srv OrderServiceServer) {
+	s.RegisterService(&OrderService_ServiceDesc, srv)
 }
 
-func _RouteGuide_RateDriver_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _OrderService_RateDriver_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DriverRatingReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RouteGuideServer).RateDriver(ctx, in)
+		return srv.(OrderServiceServer).RateDriver(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/grpc.RouteGuide/RateDriver",
+		FullMethod: "/grpc.OrderService/RateDriver",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RouteGuideServer).RateDriver(ctx, req.(*DriverRatingReq))
+		return srv.(OrderServiceServer).RateDriver(ctx, req.(*DriverRatingReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RouteGuide_RateUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _OrderService_RateUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UserRatingReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RouteGuideServer).RateUser(ctx, in)
+		return srv.(OrderServiceServer).RateUser(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/grpc.RouteGuide/RateUser",
+		FullMethod: "/grpc.OrderService/RateUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RouteGuideServer).RateUser(ctx, req.(*UserRatingReq))
+		return srv.(OrderServiceServer).RateUser(ctx, req.(*UserRatingReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RouteGuide_CreateOrder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _OrderService_CreateOrder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(OrderReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RouteGuideServer).CreateOrder(ctx, in)
+		return srv.(OrderServiceServer).CreateOrder(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/grpc.RouteGuide/CreateOrder",
+		FullMethod: "/grpc.OrderService/CreateOrder",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RouteGuideServer).CreateOrder(ctx, req.(*OrderReq))
+		return srv.(OrderServiceServer).CreateOrder(ctx, req.(*OrderReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RouteGuide_FindOrders_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _OrderService_FindOrders_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(FindOrdersReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RouteGuideServer).FindOrders(ctx, in)
+		return srv.(OrderServiceServer).FindOrders(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/grpc.RouteGuide/FindOrders",
+		FullMethod: "/grpc.OrderService/FindOrders",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RouteGuideServer).FindOrders(ctx, req.(*FindOrdersReq))
+		return srv.(OrderServiceServer).FindOrders(ctx, req.(*FindOrdersReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// RouteGuide_ServiceDesc is the grpc.ServiceDesc for RouteGuide service.
+// OrderService_ServiceDesc is the grpc.ServiceDesc for OrderService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var RouteGuide_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "grpc.RouteGuide",
-	HandlerType: (*RouteGuideServer)(nil),
+var OrderService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "grpc.OrderService",
+	HandlerType: (*OrderServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "RateDriver",
-			Handler:    _RouteGuide_RateDriver_Handler,
+			Handler:    _OrderService_RateDriver_Handler,
 		},
 		{
 			MethodName: "RateUser",
-			Handler:    _RouteGuide_RateUser_Handler,
+			Handler:    _OrderService_RateUser_Handler,
 		},
 		{
 			MethodName: "CreateOrder",
-			Handler:    _RouteGuide_CreateOrder_Handler,
+			Handler:    _OrderService_CreateOrder_Handler,
 		},
 		{
 			MethodName: "FindOrders",
-			Handler:    _RouteGuide_FindOrders_Handler,
+			Handler:    _OrderService_FindOrders_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

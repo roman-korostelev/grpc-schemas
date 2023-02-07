@@ -18,86 +18,122 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// DriverClient is the client API for Driver service.
+// DriverServiceClient is the client API for DriverService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type DriverClient interface {
-	FindDriver(ctx context.Context, in *FindDriverReq, opts ...grpc.CallOption) (*FindDriverResponse, error)
+type DriverServiceClient interface {
+	GetFreeDrivers(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Drivers, error)
+	MakeRatingReq(ctx context.Context, in *RatingReq, opts ...grpc.CallOption) (*Empty, error)
 }
 
-type driverClient struct {
+type driverServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewDriverClient(cc grpc.ClientConnInterface) DriverClient {
-	return &driverClient{cc}
+func NewDriverServiceClient(cc grpc.ClientConnInterface) DriverServiceClient {
+	return &driverServiceClient{cc}
 }
 
-func (c *driverClient) FindDriver(ctx context.Context, in *FindDriverReq, opts ...grpc.CallOption) (*FindDriverResponse, error) {
-	out := new(FindDriverResponse)
-	err := c.cc.Invoke(ctx, "/grpc.Driver/FindDriver", in, out, opts...)
+func (c *driverServiceClient) GetFreeDrivers(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Drivers, error) {
+	out := new(Drivers)
+	err := c.cc.Invoke(ctx, "/grpc.DriverService/GetFreeDrivers", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// DriverServer is the server API for Driver service.
-// All implementations must embed UnimplementedDriverServer
+func (c *driverServiceClient) MakeRatingReq(ctx context.Context, in *RatingReq, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, "/grpc.DriverService/MakeRatingReq", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// DriverServiceServer is the server API for DriverService service.
+// All implementations must embed UnimplementedDriverServiceServer
 // for forward compatibility
-type DriverServer interface {
-	FindDriver(context.Context, *FindDriverReq) (*FindDriverResponse, error)
-	mustEmbedUnimplementedDriverServer()
+type DriverServiceServer interface {
+	GetFreeDrivers(context.Context, *Empty) (*Drivers, error)
+	MakeRatingReq(context.Context, *RatingReq) (*Empty, error)
+	mustEmbedUnimplementedDriverServiceServer()
 }
 
-// UnimplementedDriverServer must be embedded to have forward compatible implementations.
-type UnimplementedDriverServer struct {
+// UnimplementedDriverServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedDriverServiceServer struct {
 }
 
-func (UnimplementedDriverServer) FindDriver(context.Context, *FindDriverReq) (*FindDriverResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method FindDriver not implemented")
+func (UnimplementedDriverServiceServer) GetFreeDrivers(context.Context, *Empty) (*Drivers, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetFreeDrivers not implemented")
 }
-func (UnimplementedDriverServer) mustEmbedUnimplementedDriverServer() {}
+func (UnimplementedDriverServiceServer) MakeRatingReq(context.Context, *RatingReq) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MakeRatingReq not implemented")
+}
+func (UnimplementedDriverServiceServer) mustEmbedUnimplementedDriverServiceServer() {}
 
-// UnsafeDriverServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to DriverServer will
+// UnsafeDriverServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to DriverServiceServer will
 // result in compilation errors.
-type UnsafeDriverServer interface {
-	mustEmbedUnimplementedDriverServer()
+type UnsafeDriverServiceServer interface {
+	mustEmbedUnimplementedDriverServiceServer()
 }
 
-func RegisterDriverServer(s grpc.ServiceRegistrar, srv DriverServer) {
-	s.RegisterService(&Driver_ServiceDesc, srv)
+func RegisterDriverServiceServer(s grpc.ServiceRegistrar, srv DriverServiceServer) {
+	s.RegisterService(&DriverService_ServiceDesc, srv)
 }
 
-func _Driver_FindDriver_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(FindDriverReq)
+func _DriverService_GetFreeDrivers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(DriverServer).FindDriver(ctx, in)
+		return srv.(DriverServiceServer).GetFreeDrivers(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/grpc.Driver/FindDriver",
+		FullMethod: "/grpc.DriverService/GetFreeDrivers",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DriverServer).FindDriver(ctx, req.(*FindDriverReq))
+		return srv.(DriverServiceServer).GetFreeDrivers(ctx, req.(*Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// Driver_ServiceDesc is the grpc.ServiceDesc for Driver service.
+func _DriverService_MakeRatingReq_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RatingReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DriverServiceServer).MakeRatingReq(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/grpc.DriverService/MakeRatingReq",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DriverServiceServer).MakeRatingReq(ctx, req.(*RatingReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// DriverService_ServiceDesc is the grpc.ServiceDesc for DriverService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var Driver_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "grpc.Driver",
-	HandlerType: (*DriverServer)(nil),
+var DriverService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "grpc.DriverService",
+	HandlerType: (*DriverServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "FindDriver",
-			Handler:    _Driver_FindDriver_Handler,
+			MethodName: "GetFreeDrivers",
+			Handler:    _DriverService_GetFreeDrivers_Handler,
+		},
+		{
+			MethodName: "MakeRatingReq",
+			Handler:    _DriverService_MakeRatingReq_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
