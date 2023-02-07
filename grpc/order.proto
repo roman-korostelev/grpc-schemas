@@ -38,7 +38,8 @@ message OrderResponse {
 enum TaxiType {
   UndefinedTaxi = 0;
   Economy = 1;
-  Business = 2;
+  Comfort = 2;
+  Business = 3;
 }
 
 enum StatusType {
