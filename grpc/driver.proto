@@ -6,7 +6,7 @@ package grpc;
 
 service DriverService {
   rpc GetFreeDrivers(Empty) returns (Drivers){}
-  rpc MakeRatingReq(RatingReq) returns (Empty){}
+  rpc ChangeDriversStatus(ChangeStatusReq) returns (Empty){}
 }
 
 
@@ -22,6 +22,6 @@ message Drivers {
   repeated Driver drivers = 1;
 }
 
-message RatingReq {
-  string UserId = 1;
+message ChangeStatusReq {
+  string DriverId = 1;
 }
